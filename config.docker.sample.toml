@@ -19,8 +19,8 @@ templates = [
     cacheSize = 10
 
 # commenting [database.elasticsearch] section will bring up the tool in in-memory db mode
-[database.elasticsearch]
-    urls = ["http://host.docker.internal:9200"]
+#[database.elasticsearch]
+ #   urls = ["http://host.docker.internal:9200"]
 
 [server]
     rpcAddr = "0.0.0.0:4000"
@@ -30,6 +30,6 @@ templates = [
 
 [connection]
     wsUrl = "ws://host.docker.internal:23000"
-    graphQLUrl = "http://host.docker.internal:8547/graphql"
+    graphQLUrl = "http://host.docker.internal:22000/graphql"
     reconnectInterval = 5
     maxReconnectTries = 5
