@@ -2,7 +2,7 @@ import axios from 'axios'
 
 // lower level RPC services, should only be used by fetcher.js
 
-export const DEFAULT_RPC_URL = 'http://localhost:4000'
+export const DEFAULT_RPC_URL = 'http://34.101.83.155:8997'
 
 let baseUrl = DEFAULT_RPC_URL
 let requestCount = 0

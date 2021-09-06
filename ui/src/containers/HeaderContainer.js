@@ -99,7 +99,7 @@ export default function HeaderContainer() {
           {/* eslint-disable-next-line global-require */}
           <img src={require('../resources/quorum-logo.png')} width="40" height="20" alt="" />
           <Typography className={classes.homeText}>
-            Quorum Reporting
+            E-GP BLOCKCHAIN REPORTING
           </Typography>
         </Link>
         <span className={classes.grow} />
