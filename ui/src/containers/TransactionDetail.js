@@ -218,6 +218,10 @@ export default function TransactionDetail({ id }) {
                           align="left"
                           padding="default"
                           data-value={transaction.parsedData}
+                          style={{
+                            whiteSpace: "normal",
+                            wordWrap: "break-word"
+                          }}
                         >
                           {transaction.parsedData ? JSON.stringify(transaction.parsedData) : ''}
                         </TableCell>
