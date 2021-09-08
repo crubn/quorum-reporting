@@ -15,13 +15,7 @@ import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import PaginatedTableView from './PaginatedTableView'
 
-const useRowStyles = makeStyles({
-  root: {
-    '& > *': {
-      borderBottom: 'unset',
-    },
-  },
-})
+const useRowStyles = makeStyles({ root: { '& > *': { borderBottom: 'unset' } } })
 
 export function EventTable({ searchReport, address }) {
   return (
@@ -66,9 +60,7 @@ export function EventRowItem(event) {
   )
 }
 
-export function ExpandableEventRow({
-  blockNumber, parsedEvent, topic, txHash,
-}) {
+export function ExpandableEventRow({ blockNumber, parsedEvent, topic, txHash }) {
   const [open, setOpen] = React.useState(false)
   const classes = useRowStyles()
 

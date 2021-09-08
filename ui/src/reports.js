@@ -52,9 +52,7 @@ const Reports = {
   ERC20TokenHolders: {
     label: 'ERC20 Token Holders',
     value: 'ERC20TokenHolders',
-    fields: {
-      block: 'optional',
-    },
+    fields: { block: 'optional' },
     View: TokenHolderTable,
     getItems: (params, options) => getERC20Holders(params.address, params.atBlock, options),
   },
@@ -71,18 +69,14 @@ const Reports = {
   ERC721Holders: {
     label: 'ERC721 Token Holders',
     value: 'ERC721Holders',
-    fields: {
-      block: 'optional',
-    },
+    fields: { block: 'optional' },
     View: TokenHolderTable,
     getItems: (params, options) => getERC721Holders(params.address, params.atBlock, options),
   },
   ERC721Tokens: {
     label: 'ERC721 Tokens',
     value: 'ERC721Tokens',
-    fields: {
-      block: 'optional',
-    },
+    fields: { block: 'optional' },
     View: TokenTable,
     getItems: (params, options) => getERC721Tokens(params.address, params.atBlock, options),
   },

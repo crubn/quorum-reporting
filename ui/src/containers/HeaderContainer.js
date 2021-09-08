@@ -21,9 +21,7 @@ import SearchField from '../components/SearchField'
 import { setBaseUrl } from '../client/rpcClient'
 
 const useStyles = makeStyles(() => ({
-  grow: {
-    flexGrow: 1,
-  },
+  grow: { flexGrow: 1 },
   home: {
     display: 'flex',
     flexDirection: 'row',

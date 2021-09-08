@@ -19,9 +19,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
   },
-  formControl: {
-    margin: theme.spacing(1),
-  },
+  formControl: { margin: theme.spacing(1) },
 }))
 
 export default function ContractActions({ onSearch, contractDetail }) {

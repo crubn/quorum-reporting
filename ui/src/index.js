@@ -20,9 +20,7 @@ const theme = createMuiTheme({
           textDecoration: 'none',
           color: blue[700],
         },
-        '.MuiTooltip-tooltip': {
-          fontSize: 14,
-        },
+        '.MuiTooltip-tooltip': { fontSize: 14 },
         td: {
           maxWidth: 0,
           textOverflow: 'ellipsis',
@@ -35,14 +33,16 @@ const theme = createMuiTheme({
 })
 
 function render(TheApp) {
-  ReactDOM.render((
+  ReactDOM.render(
+(
     <Provider store={store}>
       <MuiThemeProvider theme={theme}>
         <CssBaseline />
         <TheApp />
       </MuiThemeProvider>
     </Provider>
-  ), document.getElementById('root'))
+  ), document.getElementById('root')
+)
 }
 
 if (process.env.NODE_ENV === 'development' && module.hot) {

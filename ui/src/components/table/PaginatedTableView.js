@@ -26,12 +26,8 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  table: {
-    maxWidth: '100%',
-  },
-  loading: {
-    marginRight: 8,
-  },
+  table: { maxWidth: '100%' },
+  loading: { marginRight: 8 },
   subtitle: {
     paddingLeft: 12,
     paddingRight: 12,
@@ -43,12 +39,10 @@ const useStyles = makeStyles((theme) => ({
   footer: {
     display: 'table-caption',
     textAlign: 'right !important',
-  }
+  },
 }))
 
-export default function PaginatedTableView({
-  title, subtitle, note, getItems, ItemView, HeaderView,
-}) {
+export default function PaginatedTableView({ title, subtitle, note, getItems, ItemView, HeaderView }) {
   const classes = useStyles()
   const [total, setTotal] = useState(0)
   const [list, setList] = useState([])
@@ -107,11 +101,18 @@ export default function PaginatedTableView({
       {error && <Typography className={classes.errorRow}>{error}</Typography>}
       <TableContainer component={Paper}>
         <Table size="small" className={classes.table} aria-label="simple table">
-          {!multiPage && <caption className={classes.footer}>{total} results</caption> }
+          {!multiPage && (
+          <caption className={classes.footer}>
+            {total}
+            {' '}
+            results
+          </caption>
+          ) }
           <HeaderView />
           <TableBody>
             {list.map(ItemView)}
-            {multiPage && <TableRow key="pagination">
+            {multiPage && (
+            <TableRow key="pagination">
               <TablePagination
                 count={total}
                 rowsPerPage={rowsPerPage}
@@ -123,7 +124,8 @@ export default function PaginatedTableView({
                 onChangePage={handleChangePage}
                 onChangeRowsPerPage={handleChangeRowsPerPage}
               />
-            </TableRow>}
+            </TableRow>
+            )}
           </TableBody>
         </Table>
       </TableContainer>

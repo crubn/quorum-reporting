@@ -14,9 +14,7 @@ import ContractActions from '../components/ContractActions'
 import { getDefaultReportForTemplate } from '../reports'
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    width: '100%',
-  },
+  root: { width: '100%' },
   grid: {
     maxWidth: 1280,
     margin: '0 auto',
@@ -39,9 +37,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 13,
     display: 'block',
   },
-  value: {
-    marginBottom: 8,
-  },
+  value: { marginBottom: 8 },
   linkValue: {
     fontSize: 18,
     marginBottom: 8,

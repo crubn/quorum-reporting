@@ -15,11 +15,7 @@ import { Link } from 'react-router-dom'
 import PaginatedTableView from './PaginatedTableView'
 
 const useRowStyles = makeStyles({
-  root: {
-    '& > *': {
-      borderBottom: 'unset',
-    },
-  },
+  root: { '& > *': { borderBottom: 'unset' } },
   link: {
     cursor: 'pointer',
     textDecoration: 'none',
@@ -72,9 +68,7 @@ export function TransactionRowItem(tx) {
   )
 }
 
-export function ExpandableTxRow({
-  blockNumber, from, internalCalls, parsedEvents, parsedTransaction, txHash,
-}) {
+export function ExpandableTxRow({ blockNumber, from, internalCalls, parsedEvents, parsedTransaction, txHash }) {
   const [open, setOpen] = React.useState(false)
   const classes = useRowStyles()
 

@@ -15,9 +15,7 @@ import CardContent from '@material-ui/core/CardContent'
 import { getSingleBlock } from '../client/fetcher'
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    width: '100%',
-  },
+  root: { width: '100%' },
   grid: {
     maxWidth: 1080,
     margin: '0 auto',

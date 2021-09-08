@@ -15,16 +15,12 @@ const useStyles = makeStyles(() => ({
     flexDirection: 'column',
     alignItems: 'center',
   },
-  loading: {
-    margin: 24,
-  },
+  loading: { margin: 24 },
 }))
 
 function App() {
   const classes = useStyles()
-  const ready = useSelector(
-    (state) => state.system.isConnected && state.system.lastPersistedBlockNumber !== undefined,
-  )
+  const ready = useSelector((state) => state.system.isConnected && state.system.lastPersistedBlockNumber !== undefined)
   return (
     <Router>
       <div className={classes.root}>

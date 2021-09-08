@@ -1,12 +1,8 @@
 import * as types from '../actionTypes'
 
-export const connectAction = () => ({
-  type: types.CONNECT,
-})
+export const connectAction = () => ({ type: types.CONNECT })
 
-export const disconnectAction = () => ({
-  type: types.DISCONNECT,
-})
+export const disconnectAction = () => ({ type: types.DISCONNECT })
 
 export const updateEndpointAction = (rpcEndpoint) => ({
   type: types.UPDATE_ENDPOINT,
