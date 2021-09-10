@@ -1,17 +1,18 @@
-import React from 'react'
+import Box from '@material-ui/core/Box'
+import Collapse from '@material-ui/core/Collapse'
+import IconButton from '@material-ui/core/IconButton'
 import { makeStyles } from '@material-ui/core/styles'
 import Table from '@material-ui/core/Table'
-import TableHead from '@material-ui/core/TableHead'
 import TableBody from '@material-ui/core/TableBody'
-import TableRow from '@material-ui/core/TableRow'
 import TableCell from '@material-ui/core/TableCell'
-import IconButton from '@material-ui/core/IconButton'
-import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
-import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
-import Collapse from '@material-ui/core/Collapse'
-import Box from '@material-ui/core/Box'
+import TableHead from '@material-ui/core/TableHead'
+import TableRow from '@material-ui/core/TableRow'
 import Typography from '@material-ui/core/Typography'
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
+import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
+import React from 'react'
 import { Link } from 'react-router-dom'
+import { ListMaker } from '../listMaker'
 import PaginatedTableView from './PaginatedTableView'
 
 const useRowStyles = makeStyles({
@@ -104,21 +105,26 @@ export function ExpandableTxRow({ blockNumber, from, internalCalls, parsedEvents
           colSpan={6}
         >
           <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box margin={1} maxWidth="800px">
+            <Box margin={1}>
               <Typography>Parsed Transaction</Typography>
               <Table size="small" aria-label="a dense table">
                 <TableHead>
                   <TableRow>
-                    <TableCell><strong>Transaction Signature</strong></TableCell>
-                    <TableCell><strong>Function 4 Bytes</strong></TableCell>
-                    <TableCell><strong>Parsed Data</strong></TableCell>
+                    <TableCell width="30%"><strong>Transaction Signature</strong></TableCell>
+                    <TableCell width="20%"><strong>Function 4 Bytes</strong></TableCell>
+                    <TableCell width="50%"><strong>Parsed Data</strong></TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   <TableRow>
-                    <TableCell>{parsedTransaction.txSig}</TableCell>
-                    <TableCell>{parsedTransaction.func4Bytes}</TableCell>
-                    <TableCell>{JSON.stringify(parsedTransaction.parsedData)}</TableCell>
+                    <TableCell width="30%">{parsedTransaction.txSig}</TableCell>
+                    <TableCell width="20%">{parsedTransaction.func4Bytes}</TableCell>
+                    <TableCell width="50%" style={{ textAlign: 'left', overflowX: 'auto' }}>
+                    <ListMaker
+                                title="Parsed Data"
+                                data={parsedTransaction.parsedData}
+                    />
+                    </TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
@@ -140,7 +146,12 @@ export function ExpandableTxRow({ blockNumber, from, internalCalls, parsedEvents
                           parsedEvents.map((event) => (
                             <TableRow key={event.eventSig + JSON.stringify(event.parsedData)}>
                               <TableCell>{event.eventSig}</TableCell>
-                              <TableCell>{JSON.stringify(event.parsedData)}</TableCell>
+                              <TableCell>
+                              <ListMaker
+                                title="Parsed Data"
+                                data={event.parsedData}
+                              />
+                              </TableCell>
                             </TableRow>
                           ))
                         }

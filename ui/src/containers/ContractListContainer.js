@@ -17,8 +17,7 @@ import { deleteContract, getContracts } from '../client/fetcher'
 const useStyles = makeStyles(() => ({
   card: {
     minWidth: 275,
-    marginTop: 5,
-    marginBottom: 5,
+    margin: '1em',
     width: '95%',
     maxWidth: 1080,
   },

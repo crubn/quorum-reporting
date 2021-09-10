@@ -15,7 +15,7 @@ import CardContent from '@material-ui/core/CardContent'
 import { getSingleBlock } from '../client/fetcher'
 
 const useStyles = makeStyles((theme) => ({
-  root: { width: '100%' },
+  root: { width: '100%', margin: '1em' },
   grid: {
     maxWidth: 1080,
     margin: '0 auto',
@@ -29,10 +29,7 @@ const useStyles = makeStyles((theme) => ({
   details: {
     display: 'flex',
     flexDirection: 'column',
-    marginTop: theme.spacing(0.5),
-    marginBottom: theme.spacing(0.5),
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
+    margin: '1em'
   },
   title: {
     padding: 12,
@@ -93,49 +90,49 @@ export default function BlockDetail({ number }) {
                         </TableCell>
                       </TableRow>
                       <TableRow key="gasUsed">
-                        <TableCell width="25%" size="small">gasUsed</TableCell>
+                        <TableCell width="25%" size="small">Gas Used</TableCell>
                         <TableCell align="left" padding="default" data-value={block.gasUsed}>
                           {block.gasUsed}
                         </TableCell>
                       </TableRow>
                       <TableRow key="gasLimit">
-                        <TableCell width="25%" size="small">gasLimit</TableCell>
+                        <TableCell width="25%" size="small">Gas Limit</TableCell>
                         <TableCell align="left" padding="default" data-value={block.gasLimit}>
                           {block.gasLimit}
                         </TableCell>
                       </TableRow>
                       <TableRow key="timestamp">
-                        <TableCell width="25%" size="small">timestamp</TableCell>
+                        <TableCell width="25%" size="small">Timestamp</TableCell>
                         <TableCell align="left" padding="default" data-value={block.timestamp}>
                           {block.timestamp}
                         </TableCell>
                       </TableRow>
                       <TableRow key="parentHash">
-                        <TableCell width="25%" size="small">parentHash</TableCell>
+                        <TableCell width="25%" size="small">Parent Hash</TableCell>
                         <TableCell align="left" padding="default" data-value={block.parentHash}>
                           {block.parentHash}
                         </TableCell>
                       </TableRow>
                       <TableRow key="txRoot">
-                        <TableCell width="25%" size="small">txRoot</TableCell>
+                        <TableCell width="25%" size="small">Tx Root</TableCell>
                         <TableCell align="left" padding="default" data-value={block.txRoot}>
                           {block.txRoot}
                         </TableCell>
                       </TableRow>
                       <TableRow key="stateRoot">
-                        <TableCell width="25%" size="small">stateRoot</TableCell>
+                        <TableCell width="25%" size="small">State Root</TableCell>
                         <TableCell align="left" padding="default" data-value={block.stateRoot}>
                           {block.stateRoot}
                         </TableCell>
                       </TableRow>
                       <TableRow key="receiptRoot">
-                        <TableCell width="25%" size="small">receiptRoot</TableCell>
+                        <TableCell width="25%" size="small">Receipt Root</TableCell>
                         <TableCell align="left" padding="default" data-value={block.receiptRoot}>
                           {block.receiptRoot}
                         </TableCell>
                       </TableRow>
                       <TableRow key="extraData">
-                        <TableCell width="25%" size="small">extraData</TableCell>
+                        <TableCell width="25%" size="small">Extra Data</TableCell>
                         <TableCell
                           align="left"
                           padding="default"

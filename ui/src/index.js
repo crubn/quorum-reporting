@@ -1,17 +1,16 @@
+import blue from '@material-ui/core/colors/blue'
+import CssBaseline from '@material-ui/core/CssBaseline'
+import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-import CssBaseline from '@material-ui/core/CssBaseline'
-import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles'
-import blue from '@material-ui/core/colors/blue'
-import amber from '@material-ui/core/colors/amber'
 import App from './App'
 import store from './redux/store'
 
 const theme = createMuiTheme({
   palette: {
-    primary: blue,
-    secondary: amber,
+    primary: { main: '#3D65E8', contrastText: '#fff' },
+    secondary: { main: '#07bf35', contrastText: '#fff', dark: '#03c634' },
   },
   overrides: {
     MuiCssBaseline: {

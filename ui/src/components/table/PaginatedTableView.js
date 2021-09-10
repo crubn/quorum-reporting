@@ -1,20 +1,21 @@
-import React, { useEffect, useState } from 'react'
-import Paper from '@material-ui/core/Paper'
-import Typography from '@material-ui/core/Typography'
 import CircularProgress from '@material-ui/core/CircularProgress'
-import InfoIcon from '@material-ui/icons/Info'
-import TableContainer from '@material-ui/core/TableContainer'
-import Table from '@material-ui/core/Table'
-import TableRow from '@material-ui/core/TableRow'
-import TableBody from '@material-ui/core/TableBody'
-import TablePagination from '@material-ui/core/TablePagination'
+import Paper from '@material-ui/core/Paper'
 import { makeStyles } from '@material-ui/core/styles'
-import { useDispatch, useSelector } from 'react-redux'
+import Table from '@material-ui/core/Table'
+import TableBody from '@material-ui/core/TableBody'
+import TableContainer from '@material-ui/core/TableContainer'
+import TablePagination from '@material-ui/core/TablePagination'
+import TableRow from '@material-ui/core/TableRow'
 import Tooltip from '@material-ui/core/Tooltip'
+import Typography from '@material-ui/core/Typography'
+import InfoIcon from '@material-ui/icons/Info'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { updateRowsPerPageAction } from '../../redux/actions/systemActions'
 
 const useStyles = makeStyles((theme) => ({
   container: {
+    width: '100%',
     marginTop: theme.spacing(0.5),
     marginBottom: theme.spacing(0.5),
     marginLeft: theme.spacing(1),
@@ -26,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  table: { maxWidth: '100%' },
+  // table: { maxWidth: '100%' },
   loading: { marginRight: 8 },
   subtitle: {
     paddingLeft: 12,

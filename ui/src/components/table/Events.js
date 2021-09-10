@@ -1,18 +1,18 @@
-import React from 'react'
+import Box from '@material-ui/core/Box'
+import Collapse from '@material-ui/core/Collapse'
+import IconButton from '@material-ui/core/IconButton'
 import { makeStyles } from '@material-ui/core/styles'
 import Table from '@material-ui/core/Table'
-import TableHead from '@material-ui/core/TableHead'
 import TableBody from '@material-ui/core/TableBody'
-import TableRow from '@material-ui/core/TableRow'
 import TableCell from '@material-ui/core/TableCell'
-import IconButton from '@material-ui/core/IconButton'
-import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
-import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
-import Collapse from '@material-ui/core/Collapse'
-import Box from '@material-ui/core/Box'
+import TableHead from '@material-ui/core/TableHead'
+import TableRow from '@material-ui/core/TableRow'
 import Typography from '@material-ui/core/Typography'
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
+import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
+import React from 'react'
 import { Link } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { ListMaker } from '../listMaker'
 import PaginatedTableView from './PaginatedTableView'
 
 const useRowStyles = makeStyles({ root: { '& > *': { borderBottom: 'unset' } } })
@@ -96,7 +96,7 @@ export function ExpandableEventRow({ blockNumber, parsedEvent, topic, txHash }) 
           colSpan={6}
         >
           <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box margin={1} maxWidth="800px">
+            <Box margin={1}>
               <Typography>Parsed Event</Typography>
               <Table size="small" aria-label="a dense table">
                 <TableHead>
@@ -108,7 +108,12 @@ export function ExpandableEventRow({ blockNumber, parsedEvent, topic, txHash }) 
                 <TableBody>
                   <TableRow>
                     <TableCell>{parsedEvent.eventSig}</TableCell>
-                    <TableCell>{JSON.stringify(parsedEvent.parsedData)}</TableCell>
+                    <TableCell>
+                    <ListMaker
+                                title="Parsed Data"
+                                data={parsedEvent.parsedData}
+                    />
+                    </TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
