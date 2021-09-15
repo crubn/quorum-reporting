@@ -59,7 +59,7 @@ export function ListMaker({ title, data }) {
                     // console.log(`===========${i}`)
                     return (
                         <div key={`collapse-${i}`} style={{ marginLeft: '1em' }}>
-                            <NestedList title={x}>
+                            <NestedList title={varToTitle(x)}>
                                 <ListMaker title={x} data={data[x]} />
                             </NestedList>
                         </div>

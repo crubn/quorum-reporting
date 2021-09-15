@@ -12,7 +12,8 @@ import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { ListMaker } from '../listMaker'
+import ListMakerArray from '../listMakerArray'
+import { ListMaker } from '../listMakerJSON'
 import PaginatedTableView from './PaginatedTableView'
 
 const useRowStyles = makeStyles({
@@ -47,17 +48,19 @@ export function TransactionHeader() {
       <TableRow>
         <TableCell width="5%" />
         <TableCell width="5%"><strong>Block</strong></TableCell>
-        <TableCell width="45%"><strong>Transaction Hash</strong></TableCell>
-        <TableCell width="45%"><strong>From</strong></TableCell>
+        <TableCell width="30%"><strong>Transaction Hash</strong></TableCell>
+        <TableCell width="40%"><strong>From</strong></TableCell>
+        <TableCell width="20%"><strong>Organization ID</strong></TableCell>
       </TableRow>
     </TableHead>
   )
 }
 
-export function TransactionRowItem(tx) {
+export function TransactionRowItem(tx, i) {
+  console.log(tx)
   return (
     <ExpandableTxRow
-      key={tx.hash}
+      key={`${tx.hash} ${i}`}
       txHash={tx.hash}
       from={tx.from}
       to={tx.to}
@@ -67,6 +70,27 @@ export function TransactionRowItem(tx) {
       internalCalls={tx.internalCalls}
     />
   )
+}
+
+export function SignatureSplitter({ type, text }) {
+  console.log(text)
+  try {
+    if (text) {
+  const textSplit = text.split('(')
+  const transactionName = textSplit[0]
+  const transactionSignData = textSplit[1].slice(0, textSplit[1].length - 1).split(',').map((x) => {
+    const ar = x.split(' _')
+    return `${ar[1]} : ${ar[0]}`
+})
+  return (
+      <ListMakerArray type={type} title={transactionName} list={transactionSignData} />
+  )
+    }
+      return (<></>)
+  } catch (e) {
+    console.log(e)
+    return (<>{text}</>)
+  }
 }
 
 export function ExpandableTxRow({ blockNumber, from, internalCalls, parsedEvents, parsedTransaction, txHash }) {
@@ -95,6 +119,7 @@ export function ExpandableTxRow({ blockNumber, from, internalCalls, parsedEvents
         <TableCell>
           {from}
         </TableCell>
+        <TableCell>{parsedTransaction && parsedTransaction.parsedData ? parsedTransaction.parsedData._orgId : ''}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell
@@ -117,13 +142,13 @@ export function ExpandableTxRow({ blockNumber, from, internalCalls, parsedEvents
                 </TableHead>
                 <TableBody>
                   <TableRow>
-                    <TableCell width="30%">{parsedTransaction.txSig}</TableCell>
+                    <TableCell width="30%"><SignatureSplitter type="Transaction" text={parsedTransaction.txSig} /></TableCell>
                     <TableCell width="20%">{parsedTransaction.func4Bytes}</TableCell>
                     <TableCell width="50%" style={{ textAlign: 'left', overflowX: 'auto' }}>
-                    <ListMaker
-                                title="Parsed Data"
-                                data={parsedTransaction.parsedData}
-                    />
+                      <ListMaker
+                        title="Parsed Data"
+                        data={parsedTransaction.parsedData}
+                      />
                     </TableCell>
                   </TableRow>
                 </TableBody>
@@ -143,14 +168,14 @@ export function ExpandableTxRow({ blockNumber, from, internalCalls, parsedEvents
                       </TableHead>
                       <TableBody>
                         {
-                          parsedEvents.map((event) => (
-                            <TableRow key={event.eventSig + JSON.stringify(event.parsedData)}>
-                              <TableCell>{event.eventSig}</TableCell>
+                          parsedEvents.map((event, i) => (
+                            <TableRow key={`${event.eventSig + JSON.stringify(event.parsedData)}${i}`}>
+                              <TableCell><SignatureSplitter type="Transaction" text={event.eventSig} /></TableCell>
                               <TableCell>
-                              <ListMaker
-                                title="Parsed Data"
-                                data={event.parsedData}
-                              />
+                                <ListMaker
+                                  title="Parsed Data"
+                                  data={event.parsedData}
+                                />
                               </TableCell>
                             </TableRow>
                           ))
@@ -175,8 +200,8 @@ export function ExpandableTxRow({ blockNumber, from, internalCalls, parsedEvents
                       </TableHead>
                       <TableBody>
                         {
-                          internalCalls.map((c) => (
-                            <TableRow key={c.from + c.to}>
+                          internalCalls.map((c, i) => (
+                            <TableRow key={`${c.from + c.to}${i}`}>
                               <TableCell>{c.from}</TableCell>
                               <TableCell>{c.to}</TableCell>
                             </TableRow>

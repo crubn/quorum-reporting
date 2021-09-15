@@ -12,8 +12,9 @@ import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { ListMaker } from '../listMaker'
+import { ListMaker } from '../listMakerJSON'
 import PaginatedTableView from './PaginatedTableView'
+import { SignatureSplitter } from './Transactions'
 
 const useRowStyles = makeStyles({ root: { '& > *': { borderBottom: 'unset' } } })
 
@@ -40,8 +41,9 @@ export function EventHeader() {
       <TableRow>
         <TableCell width="5%" />
         <TableCell width="5%"><strong>Block</strong></TableCell>
-        <TableCell width="20%"><strong>Event Topic</strong></TableCell>
-        <TableCell width="20%"><strong>Transaction Hash</strong></TableCell>
+        <TableCell width="40%"><strong>Event Topic</strong></TableCell>
+        <TableCell width="30%"><strong>Transaction Hash</strong></TableCell>
+        <TableCell width="20%"><strong>Organization ID</strong></TableCell>
       </TableRow>
     </TableHead>
   )
@@ -86,6 +88,7 @@ export function ExpandableEventRow({ blockNumber, parsedEvent, topic, txHash }) 
         <TableCell>
           <Link className={classes.link} to={`/transactions/${txHash}`}>{txHash}</Link>
         </TableCell>
+        <TableCell>{parsedEvent.parsedData._orgId}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell
@@ -101,18 +104,21 @@ export function ExpandableEventRow({ blockNumber, parsedEvent, topic, txHash }) 
               <Table size="small" aria-label="a dense table">
                 <TableHead>
                   <TableRow>
-                    <TableCell><strong>Event Signature</strong></TableCell>
-                    <TableCell><strong>Parsed Data</strong></TableCell>
+                    <TableCell width="50%"><strong>Event Signature</strong></TableCell>
+                    <TableCell width="50%"><strong>Parsed Data</strong></TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   <TableRow>
-                    <TableCell>{parsedEvent.eventSig}</TableCell>
                     <TableCell>
-                    <ListMaker
-                                title="Parsed Data"
-                                data={parsedEvent.parsedData}
-                    />
+                      {' '}
+                      <SignatureSplitter type="Event" text={parsedEvent.eventSig} />
+                    </TableCell>
+                    <TableCell>
+                      <ListMaker
+                        title="Parsed Data"
+                        data={parsedEvent.parsedData}
+                      />
                     </TableCell>
                   </TableRow>
                 </TableBody>
