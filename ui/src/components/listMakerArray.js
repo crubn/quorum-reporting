@@ -14,17 +14,21 @@ import React from 'react'
 const useStyles = makeStyles((theme) => ({
     root: {
         width: '100%',
-        maxWidth: 360,
+        // maxWidth: 360,
         backgroundColor: theme.palette.background.paper,
     },
     nested: { paddingLeft: theme.spacing(4) },
 }))
 
 const varToTitle = (v) => {
-    return v.replace(/_/g, '').replace(/([A-Z])/g, ' $1').replace(/^./, (str) => { return str.toUpperCase() })
+    try {
+        return v.replace(/_/g, '').replace(/([A-Z])/g, ' $1').replace(/^./, (str) => { return str.toUpperCase() })
+    } catch (e) {
+        return v
+    }
 }
 
-export default function ListMakerArray({ type, title, list }) {
+export default function ListMakerArray({ type, title, list, accordionTitle }) {
     const classes = useStyles()
     const [open, setOpen] = React.useState(false)
 
@@ -36,13 +40,13 @@ export default function ListMakerArray({ type, title, list }) {
         <List
             component="nav"
             aria-labelledby="nested-list-subheader"
-            subheader={(
+            subheader={type === 'none' ? (<></>) : (
                 <ListSubheader style={{ color: 'black' }}>
                     <strong>
-{type}
-{' '}
-Name:
-{' '}
+                        {type}
+                        {' '}
+                        Name:
+                        {' '}
                     </strong>
                     {title}
                 </ListSubheader>
@@ -54,7 +58,7 @@ Name:
                 <ListItemIcon>
                     <StorageIcon />
                 </ListItemIcon>
-                <ListItemText primary="Signature Data" />
+                <ListItemText primary={accordionTitle} />
                 {open ? <ExpandLess /> : <ExpandMore />}
             </ListItem>
             <Collapse in={open} timeout="auto" unmountOnExit>

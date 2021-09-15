@@ -83,7 +83,7 @@ export function SignatureSplitter({ type, text }) {
     return `${ar[1]} : ${ar[0]}`
 })
   return (
-      <ListMakerArray type={type} title={transactionName} list={transactionSignData} />
+      <ListMakerArray type={type} title={transactionName} list={transactionSignData} accordionTitle="Signature Data" />
   )
     }
       return (<></>)
