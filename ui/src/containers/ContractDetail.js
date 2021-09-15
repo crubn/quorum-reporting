@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react'
-import Alert from '@material-ui/lab/Alert'
-import { useSelector } from 'react-redux'
-import { makeStyles } from '@material-ui/core/styles'
-import shallowEqual from 'react-redux/lib/utils/shallowEqual'
-import Typography from '@material-ui/core/Typography'
-import TextareaAutosize from '@material-ui/core/TextareaAutosize'
-import Grid from '@material-ui/core/Grid'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
+import Grid from '@material-ui/core/Grid'
+import { makeStyles } from '@material-ui/core/styles'
+import TextareaAutosize from '@material-ui/core/TextareaAutosize'
+import Typography from '@material-ui/core/Typography'
+import Alert from '@material-ui/lab/Alert'
+import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import shallowEqual from 'react-redux/lib/utils/shallowEqual'
 import { Link } from 'react-router-dom'
 import { getContractCreationTx } from '../client/fetcher'
 import ContractActions from '../components/ContractActions'
@@ -166,7 +166,7 @@ export default function ContractDetail({ address }) {
         )}
         {searchReport
         && (
-          <Grid item xs={12}>
+          <Grid item style={{ width: '98%', margin: '0', padding: '0' }}>
             <searchReport.View searchReport={searchReport} address={address} />
           </Grid>
         )}

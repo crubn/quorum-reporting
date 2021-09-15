@@ -29,7 +29,7 @@ function ContractTable({ contracts, handleContractDelete, handleContractEdit }) 
               hover
               className={classes.row}
               onClick={() => history.push(`/contracts/${c.address}`)}
-              key={c.address}
+              key={`${c.address} ${i}`}
             >
               <TableCell width="10%">
                 {i + 1}
@@ -42,7 +42,7 @@ function ContractTable({ contracts, handleContractDelete, handleContractEdit }) 
               </TableCell>
               <TableCell component="th" width="15%" align="right">
                 <IconButton
-                color="action"
+                color="default"
                   onClick={(e) => {
                     e.preventDefault()
                     e.stopPropagation()
@@ -52,7 +52,7 @@ function ContractTable({ contracts, handleContractDelete, handleContractEdit }) 
                   <Edit />
                 </IconButton>
                 <IconButton
-                 color="action"
+                 color="default"
                   onClick={(e) => {
                     e.preventDefault()
                     e.stopPropagation()
