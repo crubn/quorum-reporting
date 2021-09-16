@@ -15,6 +15,15 @@
       "index": "The index of this transaction in the block",
       "parsedEvents": "Parsed Events which are inheritable members of a contract.",
       "cumulativeGasUsed": "Sum of gas Used by this transaction and all preceding transactions in the same block.",
-      "gasUsed": "Total gas used utilised in this transaction"
+      "gasUsed": "Total gas used utilised in this transaction",
+      "hash":"The hash of the this block",
+      "gasLimit":"The maximum amount of gas (or energy) that can be spent on this block",
+      "timestamp":"Unix Timestamp when this block was mined",
+      "parentHash":"The unique identifier for the block that came before",
+      "txRoot":"Hash of root node of transaction list",
+      "stateRoot":"The hash of final state of the system having: account balances, contract storage, contract code and account nonces.",
+      "receiptRoot":"Hash of root node of receipt list",
+      "extraData":"An optional and free field to store extra data.",
+      "transactions":"The transactions included in the block"
     
 }

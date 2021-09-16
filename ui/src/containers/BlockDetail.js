@@ -13,6 +13,8 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { getSingleBlock } from '../client/fetcher'
 import ListMakerArray from '../components/listMakerArray'
+import CustomTooltip from '../components/Tooltip'
+import tooltipText from '../resources/tooltipText.json'
 
 const useStyles = makeStyles((theme) => ({
   root: { width: '100%', margin: '1em' },
@@ -84,55 +86,55 @@ export default function BlockDetail({ number }) {
                     <Table className={classes.table} aria-label="simple table">
                       <TableBody>
                         <TableRow key="hash">
-                          <TableCell width="25%" size="small">Hash</TableCell>
+                          <TableCell width="25%" size="small"><CustomTooltip text={tooltipText.hash}>Hash</CustomTooltip></TableCell>
                           <TableCell align="left" padding="default" data-value={block.hash}>
                             {block.hash}
                           </TableCell>
                         </TableRow>
                         <TableRow key="gasUsed">
-                          <TableCell width="25%" size="small">Gas Used</TableCell>
+                          <TableCell width="25%" size="small"><CustomTooltip text={tooltipText.gasUsed}>Gas Used</CustomTooltip></TableCell>
                           <TableCell align="left" padding="default" data-value={block.gasUsed}>
                             {block.gasUsed}
                           </TableCell>
                         </TableRow>
                         <TableRow key="gasLimit">
-                          <TableCell width="25%" size="small">Gas Limit</TableCell>
+                          <TableCell width="25%" size="small"><CustomTooltip text={tooltipText.gasLimit}>Gas Limit</CustomTooltip></TableCell>
                           <TableCell align="left" padding="default" data-value={block.gasLimit}>
                             {block.gasLimit}
                           </TableCell>
                         </TableRow>
                         <TableRow key="timestamp">
-                          <TableCell width="25%" size="small">Timestamp</TableCell>
+                          <TableCell width="25%" size="small"><CustomTooltip text={tooltipText.timestamp}>Timestamp</CustomTooltip></TableCell>
                           <TableCell align="left" padding="default" data-value={block.timestamp}>
                             {new Date(block.timestamp).toString()}
                           </TableCell>
                         </TableRow>
                         <TableRow key="parentHash">
-                          <TableCell width="25%" size="small">Parent Hash</TableCell>
+                          <TableCell width="25%" size="small"><CustomTooltip text={tooltipText.parentHash}>Parent Hash</CustomTooltip></TableCell>
                           <TableCell align="left" padding="default" data-value={block.parentHash}>
                             {block.parentHash}
                           </TableCell>
                         </TableRow>
                         <TableRow key="txRoot">
-                          <TableCell width="25%" size="small">Tx Root</TableCell>
+                          <TableCell width="25%" size="small"><CustomTooltip text={tooltipText.txRoot}>Tx Root</CustomTooltip></TableCell>
                           <TableCell align="left" padding="default" data-value={block.txRoot}>
                             {block.txRoot}
                           </TableCell>
                         </TableRow>
                         <TableRow key="stateRoot">
-                          <TableCell width="25%" size="small">State Root</TableCell>
+                          <TableCell width="25%" size="small"><CustomTooltip text={tooltipText.stateRoot}>State Root</CustomTooltip></TableCell>
                           <TableCell align="left" padding="default" data-value={block.stateRoot}>
                             {block.stateRoot}
                           </TableCell>
                         </TableRow>
                         <TableRow key="receiptRoot">
-                          <TableCell width="25%" size="small">Receipt Root</TableCell>
+                          <TableCell width="25%" size="small"><CustomTooltip text={tooltipText.receiptRoot}>Receipt Root</CustomTooltip></TableCell>
                           <TableCell align="left" padding="default" data-value={block.receiptRoot}>
                             {block.receiptRoot}
                           </TableCell>
                         </TableRow>
                         <TableRow key="extraData">
-                          <TableCell width="25%" size="small">Extra Data</TableCell>
+                          <TableCell width="25%" size="small"><CustomTooltip text={tooltipText.extraData}>Extra Data</CustomTooltip></TableCell>
                           <TableCell
                             align="left"
                             padding="default"
@@ -142,7 +144,7 @@ export default function BlockDetail({ number }) {
                           </TableCell>
                         </TableRow>
                         <TableRow key="transactions">
-                          <TableCell width="25%" size="small">Transactions</TableCell>
+                          <TableCell width="25%" size="small"><CustomTooltip text={tooltipText.transactions}>Transactions</CustomTooltip></TableCell>
                           <TableCell align="left" padding="default" data-value={block.transactions}>
 
                             <ListMakerArray
