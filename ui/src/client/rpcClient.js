@@ -143,9 +143,7 @@ export function getERC20TokenHolders(address, block, options) {
   ])
 }
 
-export function getERC20TokenBalance(
-  address, holder, startBlockNumber, endBlockNumber, options,
-) {
+export function getERC20TokenBalance(address, holder, startBlockNumber, endBlockNumber, options) {
   return request('token.GetERC20TokenBalance', [
     {
       contract: address,

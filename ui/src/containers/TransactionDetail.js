@@ -1,23 +1,26 @@
-import React, { useEffect, useState } from 'react'
-import Alert from '@material-ui/lab/Alert'
-import { useSelector } from 'react-redux'
-import { makeStyles } from '@material-ui/core/styles'
-import TableRow from '@material-ui/core/TableRow'
-import TableCell from '@material-ui/core/TableCell'
-import TableBody from '@material-ui/core/TableBody'
-import Table from '@material-ui/core/Table'
-import TableContainer from '@material-ui/core/TableContainer'
-import Typography from '@material-ui/core/Typography'
-import { Link } from 'react-router-dom'
-import Grid from '@material-ui/core/Grid'
+import { Collapse } from '@material-ui/core'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
+import Grid from '@material-ui/core/Grid'
+import { makeStyles } from '@material-ui/core/styles'
+import Table from '@material-ui/core/Table'
+import TableBody from '@material-ui/core/TableBody'
+import TableCell from '@material-ui/core/TableCell'
+import TableContainer from '@material-ui/core/TableContainer'
+import TableRow from '@material-ui/core/TableRow'
+import Typography from '@material-ui/core/Typography'
+import { ExpandLess, ExpandMore } from '@material-ui/icons'
+import Alert from '@material-ui/lab/Alert'
+import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { getSingleTransaction } from '../client/fetcher'
+import ListMaker from '../components/listMakerJSON'
+import CustomTooltip from '../components/Tooltip'
+import tooltipText from '../resources/tooltipText.json'
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    width: '100%',
-  },
+  root: { width: '100%', margin: '1em' },
   grid: {
     maxWidth: 1080,
     margin: '0 auto',
@@ -31,10 +34,7 @@ const useStyles = makeStyles((theme) => ({
   details: {
     display: 'flex',
     flexDirection: 'column',
-    marginTop: theme.spacing(0.5),
-    marginBottom: theme.spacing(0.5),
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
+    margin: '1em'
   },
   title: {
     padding: 12,
@@ -50,11 +50,19 @@ export default function TransactionDetail({ id }) {
   const [transaction, setDisplayData] = useState()
   const [errorMessage, setErrorMessage] = useState()
   const { rpcEndpoint } = useSelector((state) => state.system)
+  const [open, setOpen] = React.useState(false)
+
+  const handleClick = () => {
+    setOpen(!open)
+  }
 
   useEffect(() => {
     setDisplayData(undefined)
     getSingleTransaction(id)
-      .then((res) => setDisplayData(res))
+      .then((res) => {
+        console.log(res)
+        setDisplayData(res)
+      })
       .catch((e) => {
         setErrorMessage(`Transaction not found (${e.message})`)
         setDisplayData(undefined)
@@ -71,194 +79,226 @@ export default function TransactionDetail({ id }) {
         alignItems="stretch"
       >
         {errorMessage
-        && (
-          <Grid item xs={12}>
-            <Alert severity="error" className={classes.alert}>{errorMessage}</Alert>
-          </Grid>
-        )}
+          && (
+            <Grid item xs={12}>
+              <Alert severity="error" className={classes.alert}>{errorMessage}</Alert>
+            </Grid>
+          )}
         {transaction
-        && (
-          <Grid item xs={12}>
-            <Card className={classes.details}>
-              <CardContent>
-                <Typography variant="h6" className={classes.title}>
-                  Transaction
-                  {id}
-                </Typography>
-                <TableContainer>
-                  <Table className={classes.table} aria-label="simple table">
-                    <TableBody>
-                      <TableRow key="from">
-                        <TableCell width="25%" size="small">from</TableCell>
-                        <TableCell align="left" padding="default" data-value={transaction.from}>
-                          <Link to={`/contracts/${transaction.from}`}>{transaction.from}</Link>
-                        </TableCell>
-                      </TableRow>
-                      {transaction.to
-                      && transaction.to !== '0x0000000000000000000000000000000000000000'
-                      && (
-                        <TableRow key="to">
-                          <TableCell width="25%" size="small">to</TableCell>
-                          <TableCell align="left" padding="default" data-value={transaction.to}>
-                            <Link to={`/contracts/${transaction.to}`}>{transaction.to}</Link>
+          && (
+            <Grid item xs={12}>
+              <Card className={classes.details}>
+                <CardContent>
+                  <Typography variant="h6" className={classes.title}>
+                    Transaction:&nbsp;
+                    {id}
+                  </Typography>
+                  <TableContainer>
+                    <Table className={classes.table} aria-label="simple table">
+                      <TableBody>
+                        <TableRow key="from">
+                          <TableCell width="25%" size="small"><CustomTooltip text={tooltipText.from}>From</CustomTooltip></TableCell>
+                          <TableCell align="left" padding="default" data-value={transaction.from}>
+                            {transaction.parsedData && transaction.parsedData._orgId && `${transaction.parsedData._orgId}: `}
+                            <Link to={`/contracts/${transaction.from}`}>{transaction.from}</Link>
+
                           </TableCell>
                         </TableRow>
-                      )}
-                      {transaction.createdContract
-                      && transaction.createdContract !== '0x0000000000000000000000000000000000000000'
-                      && (
-                        <TableRow key="createdContract">
-                          <TableCell width="25%" size="small">createdContract</TableCell>
+                        {transaction.to
+                          && transaction.to !== '0x0000000000000000000000000000000000000000'
+                          && (
+                            <TableRow key="to">
+                              <TableCell width="25%" size="small"><CustomTooltip text={tooltipText.to}>To</CustomTooltip></TableCell>
+                              <TableCell align="left" padding="default" data-value={transaction.to}>
+                                <Link to={`/contracts/${transaction.to}`}>{transaction.to}</Link>
+                              </TableCell>
+                            </TableRow>
+                          )}
+                        <TableRow key="parsedData">
+                          <TableCell width="25%" size="small"><CustomTooltip text={tooltipText.parsedData}>Parsed Data</CustomTooltip></TableCell>
                           <TableCell
                             align="left"
                             padding="default"
-                            data-value={transaction.createdContract}
+                            data-value={transaction.parsedData}
+                            style={{
+                              whiteSpace: 'normal',
+                              wordWrap: 'break-word'
+                            }}
                           >
-                            <Link
-                              to={`/contracts/${transaction.createdContract}`}
-                            >
-                              {transaction.createdContract}
-                            </Link>
+                            {transaction.parsedData ? (
+                              <ListMaker
+                                title="Parsed Data"
+                                data={transaction.parsedData}
+                              />
+                            ) : ''}
                           </TableCell>
                         </TableRow>
-                      )}
-                      <TableRow key="value">
-                        <TableCell width="25%" size="small">value</TableCell>
-                        <TableCell
-                          align="left"
-                          padding="default"
-                          data-value={transaction.value}
-                        >
-                          {transaction.value}
-                        </TableCell>
-                      </TableRow>
-                      <TableRow key="gas">
-                        <TableCell width="25%" size="small">gas</TableCell>
-                        <TableCell
-                          align="left"
-                          padding="default"
-                          data-value={transaction.gas}
-                        >
-                          {transaction.gas}
-                        </TableCell>
-                      </TableRow>
-                      <TableRow key="gasPrice">
-                        <TableCell width="25%" size="small">gasPrice</TableCell>
-                        <TableCell
-                          align="left"
-                          padding="default"
-                          data-value={transaction.gasPrice}
-                        >
-                          {transaction.gasPrice}
-                        </TableCell>
-                      </TableRow>
-                      <TableRow key="data">
-                        <TableCell width="25%" size="small">data</TableCell>
-                        <TableCell
-                          align="left"
-                          padding="default"
-                          data-value={transaction.data}
-                        >
-                          {transaction.data}
-                        </TableCell>
-                      </TableRow>
-                      <TableRow key="blockNumber">
-                        <TableCell width="25%" size="small">blockNumber</TableCell>
-                        <TableCell
-                          align="left"
-                          padding="default"
-                          data-value={transaction.blockNumber}
-                        >
-                          <Link
-                            to={`/blocks/${transaction.blockNumber}`}
+                        <TableRow onClick={handleClick} style={{ cursor: 'pointer' }} key="details">
+                          <TableCell width="25%" size="small">
+
+                            <strong> More Details</strong>
+                          </TableCell>
+                          <TableCell
+                            align="right"
+                            padding="default"
+                            data-value="More Details"
+                            style={{
+                              whiteSpace: 'normal',
+                              wordWrap: 'break-word'
+                            }}
                           >
-                            {transaction.blockNumber}
-                          </Link>
-                        </TableCell>
-                      </TableRow>
-                      <TableRow key="blockHash">
-                        <TableCell width="25%" size="small">blockHash</TableCell>
-                        <TableCell
-                          align="left"
-                          padding="default"
-                          data-value={transaction.blockHash}
-                        >
-                          {transaction.blockHash}
-                        </TableCell>
-                      </TableRow>
-                      <TableRow key="status">
-                        <TableCell width="25%" size="small">status</TableCell>
-                        <TableCell
-                          align="left"
-                          padding="default"
-                          data-value={transaction.status}
-                        >
-                          {transaction.status ? 1 : 0}
-                        </TableCell>
-                      </TableRow>
-                      <TableRow key="nonce">
-                        <TableCell width="25%" size="small">nonce</TableCell>
-                        <TableCell
-                          align="left"
-                          padding="default"
-                          data-value={transaction.nonce}
-                        >
-                          {transaction.nonce}
-                        </TableCell>
-                      </TableRow>
-                      <TableRow key="index">
-                        <TableCell width="25%" size="small">index</TableCell>
-                        <TableCell align="left" padding="default" data-value={transaction.index}>
-                          {transaction.index}
-                        </TableCell>
-                      </TableRow>
-                      <TableRow key="parsedData">
-                        <TableCell width="25%" size="small">parsedData</TableCell>
-                        <TableCell
-                          align="left"
-                          padding="default"
-                          data-value={transaction.parsedData}
-                          style={{
-                            whiteSpace: "normal",
-                            wordWrap: "break-word"
-                          }}
-                        >
-                          {transaction.parsedData ? JSON.stringify(transaction.parsedData) : ''}
-                        </TableCell>
-                      </TableRow>
-                      <TableRow key="parsedEvents">
-                        <TableCell width="25%" size="small">Events</TableCell>
-                        <TableCell
-                          align="left"
-                          padding="default"
-                          data-value={transaction.parsedEvents}
-                        >
-                          {transaction.parsedEvents ? transaction.parsedEvents.length : ''}
-                        </TableCell>
-                      </TableRow>
-                      <TableRow key="cumulativeGasUsed">
-                        <TableCell width="25%" size="small">cumulativeGasUsed</TableCell>
-                        <TableCell
-                          align="left"
-                          padding="default"
-                          data-value={transaction.cumulativeGasUsed}
-                        >
-                          {transaction.cumulativeGasUsed}
-                        </TableCell>
-                      </TableRow>
-                      <TableRow key="gasUsed">
-                        <TableCell width="25%" size="small">gasUsed</TableCell>
-                        <TableCell align="left" padding="default" data-value={transaction.gasUsed}>
-                          {transaction.gasUsed}
-                        </TableCell>
-                      </TableRow>
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-              </CardContent>
-            </Card>
-          </Grid>
-        )}
+                            {open ? <ExpandLess /> : <ExpandMore />}
+                          </TableCell>
+                        </TableRow>
+                      </TableBody>
+                    </Table>
+                    <Collapse in={open} timeout="auto" unmountOnExit>
+                      <Table className={classes.table} aria-label="simple table">
+                        <TableBody>
+                          {transaction.createdContract
+                            && transaction.createdContract !== '0x0000000000000000000000000000000000000000'
+                            && (
+                              <TableRow key="createdContract">
+                                <TableCell width="25%" size="small"><CustomTooltip text={tooltipText.createdContract}>Created Contract</CustomTooltip></TableCell>
+                                <TableCell
+                                  align="left"
+                                  padding="default"
+                                  data-value={transaction.createdContract}
+                                >
+                                  <Link
+                                    to={`/contracts/${transaction.createdContract}`}
+                                  >
+                                    {transaction.createdContract}
+                                  </Link>
+                                </TableCell>
+                              </TableRow>
+                            )}
+                          <TableRow key="value">
+                            <TableCell width="25%" size="small"><CustomTooltip text={tooltipText.value}>Value</CustomTooltip></TableCell>
+                            <TableCell
+                              align="left"
+                              padding="default"
+                              data-value={transaction.value}
+                            >
+                              {transaction.value}
+                            </TableCell>
+                          </TableRow>
+                          <TableRow key="gas">
+                            <TableCell width="25%" size="small"><CustomTooltip text={tooltipText.gas}>Gas</CustomTooltip></TableCell>
+                            <TableCell
+                              align="left"
+                              padding="default"
+                              data-value={transaction.gas}
+                            >
+                              {transaction.gas}
+                            </TableCell>
+                          </TableRow>
+                          <TableRow key="gasPrice">
+                            <TableCell width="25%" size="small"><CustomTooltip text={tooltipText.gasPrice}>Gas Price</CustomTooltip></TableCell>
+                            <TableCell
+                              align="left"
+                              padding="default"
+                              data-value={transaction.gasPrice}
+                            >
+                              {transaction.gasPrice}
+                            </TableCell>
+                          </TableRow>
+                          <TableRow key="data">
+                            <TableCell width="25%" size="small"><CustomTooltip text={tooltipText.data}>Data</CustomTooltip></TableCell>
+                            <TableCell
+                              align="left"
+                              padding="default"
+                              data-value={transaction.data}
+                            >
+                              {transaction.data}
+                            </TableCell>
+                          </TableRow>
+                          <TableRow key="blockNumber">
+                            <TableCell width="25%" size="small"><CustomTooltip text={tooltipText.blockNumber}>Block Number</CustomTooltip></TableCell>
+                            <TableCell
+                              align="left"
+                              padding="default"
+                              data-value={transaction.blockNumber}
+                            >
+                              <Link
+                                to={`/blocks/${transaction.blockNumber}`}
+                              >
+                                {transaction.blockNumber}
+                              </Link>
+                            </TableCell>
+                          </TableRow>
+                          <TableRow key="blockHash">
+                            <TableCell width="25%" size="small"><CustomTooltip text={tooltipText.blockHash}>Block Hash</CustomTooltip></TableCell>
+                            <TableCell
+                              align="left"
+                              padding="default"
+                              data-value={transaction.blockHash}
+                            >
+                              {transaction.blockHash}
+                            </TableCell>
+                          </TableRow>
+                          <TableRow key="status">
+                            <TableCell width="25%" size="small"><CustomTooltip text={tooltipText.status}>Status</CustomTooltip></TableCell>
+                            <TableCell
+                              align="left"
+                              padding="default"
+                              data-value={transaction.status}
+                            >
+                              {transaction.status ? 1 : 0}
+                            </TableCell>
+                          </TableRow>
+                          <TableRow key="nonce">
+                            <TableCell width="25%" size="small"><CustomTooltip text={tooltipText.nonce}>Nonce</CustomTooltip></TableCell>
+                            <TableCell
+                              align="left"
+                              padding="default"
+                              data-value={transaction.nonce}
+                            >
+                              {transaction.nonce}
+                            </TableCell>
+                          </TableRow>
+                          <TableRow key="index">
+                            <TableCell width="25%" size="small"><CustomTooltip text={tooltipText.index}>Index</CustomTooltip></TableCell>
+                            <TableCell align="left" padding="default" data-value={transaction.index}>
+                              {transaction.index}
+                            </TableCell>
+                          </TableRow>
+
+                          <TableRow key="parsedEvents">
+                            <TableCell width="25%" size="small"><CustomTooltip text={tooltipText.parsedEvents}>Events</CustomTooltip></TableCell>
+                            <TableCell
+                              align="left"
+                              padding="default"
+                              data-value={transaction.parsedEvents}
+                            >
+                              {transaction.parsedEvents ? transaction.parsedEvents.length : ''}
+                            </TableCell>
+                          </TableRow>
+                          <TableRow key="cumulativeGasUsed">
+                            <TableCell width="25%" size="small"><CustomTooltip text={tooltipText.cumulativeGasUsed}>Cumulative Gas Used</CustomTooltip></TableCell>
+                            <TableCell
+                              align="left"
+                              padding="default"
+                              data-value={transaction.cumulativeGasUsed}
+                            >
+                              {transaction.cumulativeGasUsed}
+                            </TableCell>
+                          </TableRow>
+                          <TableRow key="gasUsed">
+                            <TableCell width="25%" size="small"><CustomTooltip text={tooltipText.gasUsed}>Gas Used</CustomTooltip></TableCell>
+                            <TableCell align="left" padding="default" data-value={transaction.gasUsed}>
+                              {transaction.gasUsed}
+                            </TableCell>
+                          </TableRow>
+                        </TableBody>
+                      </Table>
+                    </Collapse>
+
+                  </TableContainer>
+                </CardContent>
+              </Card>
+            </Grid>
+          )}
       </Grid>
     </div>
   )

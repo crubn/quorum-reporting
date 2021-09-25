@@ -1,27 +1,20 @@
-import React, { useState } from 'react'
-import CardContent from '@material-ui/core/CardContent'
-import Card from '@material-ui/core/Card'
 import Button from '@material-ui/core/Button'
-import SearchIcon from '@material-ui/icons/Search'
-import { makeStyles } from '@material-ui/core/styles'
+import Card from '@material-ui/core/Card'
+import CardContent from '@material-ui/core/CardContent'
 import FormControl from '@material-ui/core/FormControl'
+import { makeStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
-import Alert from '@material-ui/lab/Alert'
-import { useSelector } from 'react-redux'
 import Typography from '@material-ui/core/Typography'
+import SearchIcon from '@material-ui/icons/Search'
+import Alert from '@material-ui/lab/Alert'
+import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
 import Reports, { getReportsForTemplate } from '../reports'
 import ContractSelector from './ContractSelector'
 
 const useStyles = makeStyles((theme) => ({
-  card: {
-    marginTop: theme.spacing(0.5),
-    marginBottom: theme.spacing(0.5),
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
-  },
-  formControl: {
-    margin: theme.spacing(1),
-  },
+  card: { margin: '1em' },
+  formControl: { margin: theme.spacing(1) },
 }))
 
 export default function ContractActions({ onSearch, contractDetail }) {

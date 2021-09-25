@@ -1,23 +1,23 @@
-import React, { useEffect, useState } from 'react'
 import Button from '@material-ui/core/Button'
-import TextField from '@material-ui/core/TextField'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogTitle from '@material-ui/core/DialogTitle'
-import Alert from '@material-ui/lab/Alert'
 import FormControl from '@material-ui/core/FormControl'
 import InputLabel from '@material-ui/core/InputLabel'
-import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
-import { useSelector } from 'react-redux'
+import Select from '@material-ui/core/Select'
+import { makeStyles } from '@material-ui/core/styles'
+import TextField from '@material-ui/core/TextField'
 import Tooltip from '@material-ui/core/Tooltip'
 import HelpIcon from '@material-ui/icons/Help'
-import { makeStyles } from '@material-ui/core/styles'
+import Alert from '@material-ui/lab/Alert'
+import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 import { addContract } from '../client/fetcher'
 import { addTemplate, assignTemplate, getTemplates } from '../client/rpcClient'
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   tooltipControl: {
     display: 'flex',
     flexDirection: 'row',
@@ -26,6 +26,7 @@ const useStyles = makeStyles(() => ({
   helpIcon: {
     marginLeft: 6,
     marginBottom: 6,
+    color: theme.palette.primary.contrastText
   },
 }))
 
@@ -94,7 +95,7 @@ function ContractForm({ handleCloseSetting, handleRegisterNewContract, isOpen, e
           <Tooltip
             title="Contract Templates are reusable definitions of the structure of a contract, including contract ABI and storage layouts."
           >
-            <HelpIcon color="action" fontSize="small" className={classes.helpIcon} />
+            <HelpIcon fontSize="small" color="action" />
           </Tooltip>
         </div>
         {selectedTemplate === 'new' && (

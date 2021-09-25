@@ -1,27 +1,22 @@
-import React from 'react'
+import Box from '@material-ui/core/Box'
+import Collapse from '@material-ui/core/Collapse'
+import IconButton from '@material-ui/core/IconButton'
 import { makeStyles } from '@material-ui/core/styles'
 import Table from '@material-ui/core/Table'
-import TableHead from '@material-ui/core/TableHead'
 import TableBody from '@material-ui/core/TableBody'
-import TableRow from '@material-ui/core/TableRow'
 import TableCell from '@material-ui/core/TableCell'
-import IconButton from '@material-ui/core/IconButton'
-import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
-import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
-import Collapse from '@material-ui/core/Collapse'
-import Box from '@material-ui/core/Box'
+import TableHead from '@material-ui/core/TableHead'
+import TableRow from '@material-ui/core/TableRow'
 import Typography from '@material-ui/core/Typography'
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
+import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
+import React from 'react'
 import { Link } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { ListMaker } from '../listMakerJSON'
 import PaginatedTableView from './PaginatedTableView'
+import { SignatureSplitter } from './Transactions'
 
-const useRowStyles = makeStyles({
-  root: {
-    '& > *': {
-      borderBottom: 'unset',
-    },
-  },
-})
+const useRowStyles = makeStyles({ root: { '& > *': { borderBottom: 'unset' } } })
 
 export function EventTable({ searchReport, address }) {
   return (
@@ -46,8 +41,9 @@ export function EventHeader() {
       <TableRow>
         <TableCell width="5%" />
         <TableCell width="5%"><strong>Block</strong></TableCell>
-        <TableCell width="20%"><strong>Event Topic</strong></TableCell>
-        <TableCell width="20%"><strong>Transaction Hash</strong></TableCell>
+        <TableCell width="40%"><strong>Event Topic</strong></TableCell>
+        <TableCell width="30%"><strong>Transaction Hash</strong></TableCell>
+        <TableCell width="20%"><strong>Organization ID</strong></TableCell>
       </TableRow>
     </TableHead>
   )
@@ -66,9 +62,7 @@ export function EventRowItem(event) {
   )
 }
 
-export function ExpandableEventRow({
-  blockNumber, parsedEvent, topic, txHash,
-}) {
+export function ExpandableEventRow({ blockNumber, parsedEvent, topic, txHash }) {
   const [open, setOpen] = React.useState(false)
   const classes = useRowStyles()
 
@@ -94,6 +88,7 @@ export function ExpandableEventRow({
         <TableCell>
           <Link className={classes.link} to={`/transactions/${txHash}`}>{txHash}</Link>
         </TableCell>
+        <TableCell>{parsedEvent.parsedData._orgId}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell
@@ -104,19 +99,27 @@ export function ExpandableEventRow({
           colSpan={6}
         >
           <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box margin={1} maxWidth="800px">
+            <Box margin={1}>
               <Typography>Parsed Event</Typography>
               <Table size="small" aria-label="a dense table">
                 <TableHead>
                   <TableRow>
-                    <TableCell><strong>Event Signature</strong></TableCell>
-                    <TableCell><strong>Parsed Data</strong></TableCell>
+                    <TableCell width="50%"><strong>Event Signature</strong></TableCell>
+                    <TableCell width="50%"><strong>Parsed Data</strong></TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   <TableRow>
-                    <TableCell>{parsedEvent.eventSig}</TableCell>
-                    <TableCell>{JSON.stringify(parsedEvent.parsedData)}</TableCell>
+                    <TableCell>
+                      {' '}
+                      <SignatureSplitter type="Event" text={parsedEvent.eventSig} />
+                    </TableCell>
+                    <TableCell>
+                      <ListMaker
+                        title="Parsed Data"
+                        data={parsedEvent.parsedData}
+                      />
+                    </TableCell>
                   </TableRow>
                 </TableBody>
               </Table>

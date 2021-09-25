@@ -1,0 +1,29 @@
+{
+   
+      "from": "The address of the organization that initiated the transaction",
+      "to": "The address of the contract who hosted the organization on blockchain network",
+      "parsedData": "Data that was parsed in this transaction",
+      "createdContract": "Address of the contract that was created in this transaction",
+      "value": "The value which is stored in the created contract",
+      "gas": "Total gas available in this created contract",
+      "gasPrice": "The current gas price on the blockchain network",
+      "data": "The value which is stored in the created contract",
+      "blockNumber": "The number of the block which contains this smart contract",
+      "blockHash": "The hash of the block which contains this smart contract",
+      "status": "0 means this contract is active, 1 means contract is inactive",
+      "nonce": "A scalar value equal to the number of transactions sent from this address or the number of contract-creations made by this account.",
+      "index": "The index of this transaction in the block",
+      "parsedEvents": "Parsed Events which are inheritable members of a contract.",
+      "cumulativeGasUsed": "Sum of gas Used by this transaction and all preceding transactions in the same block.",
+      "gasUsed": "Total gas used utilised in this transaction",
+      "hash":"The hash of the this block",
+      "gasLimit":"The maximum amount of gas (or energy) that can be spent on this block",
+      "timestamp":"Unix Timestamp when this block was mined",
+      "parentHash":"The unique identifier for the block that came before",
+      "txRoot":"Hash of root node of transaction list",
+      "stateRoot":"The hash of final state of the system having: account balances, contract storage, contract code and account nonces.",
+      "receiptRoot":"Hash of root node of receipt list",
+      "extraData":"An optional and free field to store extra data.",
+      "transactions":"The transactions included in the block"
+    
+}

@@ -52,7 +52,7 @@ export function getContractCreationTx(address) {
 export function getToTxs(address, options) {
   return getAllTransactionsToAddress(address, options)
     .then((res) => {
-      if(!res.transactions) {
+      if (!res.transactions) {
         return {
           data: [],
           total: 0,
@@ -71,7 +71,7 @@ export function getToTxs(address, options) {
 export function getInternalToTxs(address, options) {
   return getAllTransactionsInternalToAddress(address, options)
     .then((res) => {
-      if(!res.transactions) {
+      if (!res.transactions) {
         return {
           data: [],
           total: 0,
@@ -256,8 +256,7 @@ export function getSingleTransaction(txHash) {
 }
 
 function getContractsDetail(addresses) {
-  return Promise.all(
-    addresses.map((address) => {
+  return Promise.all(addresses.map((address) => {
       return Promise.all([
         getABI(address)
           .then((res) => res),
@@ -274,14 +273,11 @@ function getContractsDetail(addresses) {
             name,
           }
         })
-    }),
-  )
+    }))
 }
 
 function getTransactionsDetail(txs) {
-  return Promise.all(
-    txs.map((hash) => getTransactionDetail(hash)),
-  )
+  return Promise.all(txs.map((hash) => getTransactionDetail(hash)))
 }
 
 function getTransactionDetail(txHash) {

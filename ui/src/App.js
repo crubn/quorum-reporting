@@ -1,30 +1,28 @@
-import React from 'react'
-import makeStyles from '@material-ui/core/styles/makeStyles'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import { useSelector } from 'react-redux'
 import CircularProgress from '@material-ui/core/CircularProgress'
-import HeaderContainer from './containers/HeaderContainer'
+import makeStyles from '@material-ui/core/styles/makeStyles'
+import React from 'react'
+import { useSelector } from 'react-redux'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import BlockDetail from './containers/BlockDetail'
-import TransactionDetail from './containers/TransactionDetail'
 import ContractDetail from './containers/ContractDetail'
 import ContractListContainer from './containers/ContractListContainer'
+import HeaderContainer from './containers/HeaderContainer'
+import TransactionDetail from './containers/TransactionDetail'
 
 const useStyles = makeStyles(() => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    backgroundColor: '#f2f2f4',
+    minHeight: '100vh'
   },
-  loading: {
-    margin: 24,
-  },
+  loading: { margin: 24 },
 }))
 
 function App() {
   const classes = useStyles()
-  const ready = useSelector(
-    (state) => state.system.isConnected && state.system.lastPersistedBlockNumber !== undefined,
-  )
+  const ready = useSelector((state) => state.system.isConnected && state.system.lastPersistedBlockNumber !== undefined)
   return (
     <Router>
       <div className={classes.root}>

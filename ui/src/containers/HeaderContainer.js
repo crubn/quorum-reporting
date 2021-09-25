@@ -1,29 +1,28 @@
-import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
 import AppBar from '@material-ui/core/AppBar'
+import IconButton from '@material-ui/core/IconButton'
+import { makeStyles } from '@material-ui/core/styles'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
-import IconButton from '@material-ui/core/IconButton'
-import SettingsIcon from '@material-ui/icons/Settings'
-import { makeStyles } from '@material-ui/core/styles'
-import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 import { Lens } from '@material-ui/icons'
+import SettingsIcon from '@material-ui/icons/Settings'
+import React, { useEffect, useState } from 'react'
+import { shallowEqual, useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
+import { getBlockNumber, getContracts } from '../client/fetcher'
+import { setBaseUrl } from '../client/rpcClient'
+import SearchField from '../components/SearchField'
 import SettingForm from '../components/SettingForm'
 import {
   connectAction,
   disconnectAction,
   getContractsAction,
   updateBlockNumberAction,
-  updateEndpointAction,
+  updateEndpointAction
 } from '../redux/actions/systemActions'
-import { getBlockNumber, getContracts } from '../client/fetcher'
-import SearchField from '../components/SearchField'
-import { setBaseUrl } from '../client/rpcClient'
+import logo from '../resources/quorum-logo.png'
 
-const useStyles = makeStyles(() => ({
-  grow: {
-    flexGrow: 1,
-  },
+const useStyles = makeStyles((theme) => ({
+  grow: { flexGrow: 1 },
   home: {
     display: 'flex',
     flexDirection: 'row',
@@ -43,6 +42,11 @@ const useStyles = makeStyles(() => ({
     color: 'inherit',
     margin: 12,
   },
+  button: { color: theme.palette.primary.contrastText },
+  // logo: {
+  //   // backgroundColor: theme.palette.primary.contrastText
+  // }
+
 }))
 
 export default function HeaderContainer() {
@@ -97,7 +101,7 @@ export default function HeaderContainer() {
       <Toolbar>
         <Link to="/" className={classes.home}>
           {/* eslint-disable-next-line global-require */}
-          <img src={require('../resources/quorum-logo.png')} width="40" height="20" alt="" />
+          <img src={logo} className={classes.logo} width="40" height="20" alt="" />
           <Typography className={classes.homeText}>
             E-GP BLOCKCHAIN REPORTING
           </Typography>
@@ -107,7 +111,7 @@ export default function HeaderContainer() {
         <Lens
           style={{
             fontSize: 16,
-            color: isConnected ? 'green' : 'red',
+            color: isConnected ? '#15db47' : 'red',
             margin: 6,
           }}
         />
